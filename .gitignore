@@ -1,3 +1,8 @@
 # Default ignored files
 /out/
-
+/.idea/kotlinc.xml
+/.idea/misc.xml
+/rxcore/rxcore.iml
+/rxjavacore.iml
+/.idea/uiDesigner.xml
+/.idea/workspace.xml
