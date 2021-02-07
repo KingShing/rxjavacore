@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/rxcore/rxcore.iml" filepath="$PROJECT_DIR$/rxcore/rxcore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rxjavacore.iml" filepath="$PROJECT_DIR$/rxjavacore.iml" />
+    </modules>
+  </component>
+</project>
