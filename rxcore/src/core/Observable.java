@@ -1,5 +1,11 @@
 package core;
 
+import core.easycall.Consumer;
+import core.easycall.Functions;
+import core.easycall.LambdaObserver;
+import core.operator.Function;
+import core.operator.ObservableMap;
+
 /**
  * Created by kingshingyeh on 2021/2/5.
  */
@@ -9,10 +15,24 @@ public abstract class Observable<T> implements ObservableSource<T> {
         subscribeActual(observer);
     }
 
+    public void subscribe(Consumer<T> consumer) {
+        LambdaObserver<T> lambdaObserver = new LambdaObserver<>(consumer, Functions.EmptyConsumer, Functions.EmptyAction, Functions.EmptySubscribe);
+        subscribeActual(lambdaObserver);
+    }
+
+    public void subscribe(Consumer<T> consumer, Consumer<? super Throwable> onError) {
+        LambdaObserver<T> lambdaObserver = new LambdaObserver<>(consumer, onError, Functions.EmptyAction, Functions.EmptySubscribe);
+        subscribeActual(lambdaObserver);
+    }
+
     abstract protected void subscribeActual(Observer<T> observer);
 
     public final <R> Observable<R> compose(ObservableTransformer<T, R> transformer) {
         return transformer.apply(this);
+    }
+
+    public final <R> Observable<R> map(Function<? super T, ? extends R> function) {
+        return new ObservableMap<T, R>(this, function);
     }
 
     public Observable<T> observeOn(SchedulerWorker worker) {
@@ -92,7 +112,6 @@ public abstract class Observable<T> implements ObservableSource<T> {
         }
     }
 
-
     static class ObservableSimple<T> extends Observable<T> {
 
         private final ObservableOnSubscribe<T> source;
@@ -108,5 +127,6 @@ public abstract class Observable<T> implements ObservableSource<T> {
             source.subscribe(createEmitter);
         }
     }
+
 
 }
